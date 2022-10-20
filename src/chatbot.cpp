@@ -45,6 +45,91 @@ ChatBot::~ChatBot()
 //// STUDENT CODE
 ////
 
+// copy constructor
+ChatBot::ChatBot(const ChatBot &source) 
+{
+    std::cout << "Copying content of " << &source << " to " << this << "\n";
+
+    if(source._image != NULL) {
+        this->_image = new wxBitmap(*source._image);
+    } else {
+        this->_image = NULL;
+    }
+
+    this->_chatLogic = source._chatLogic;
+    this->_rootNode = source._rootNode;
+    this->_currentNode = source._currentNode;
+    this->_chatLogic->SetChatbotHandle(this);
+}
+// copy assignment constructor
+ChatBot &ChatBot::operator=(const ChatBot &source) 
+{
+    std::cout << "Assigning content of " << &source << " to " << this << "\n";
+    // check if source is self
+    if (this == &source) {
+        return *this;
+    }
+    // if image exists, delete it
+    if(_image != NULL) {
+        delete _image;
+    }
+    // assign source data
+    if (source._image != NULL) {
+        this->_image = new wxBitmap(*source._image);
+    } else {
+        this->_image = NULL;
+    }
+    this->_chatLogic = source._chatLogic;
+    this->_rootNode = source._rootNode;
+    this->_currentNode = source._currentNode;
+    this->_chatLogic->SetChatbotHandle(this);
+
+    return *this;
+}
+// move constructor
+ChatBot::ChatBot(ChatBot &&source) 
+{
+    std::cout << "Moving constructor instance " << &source << " to " << this << "\n";
+    // assign source data
+    if (source._image != NULL) {
+        this->_image = new wxBitmap(*source._image);
+    } else {
+        this->_image = NULL;
+    }
+    this->_chatLogic = source._chatLogic;
+    this->_rootNode = source._rootNode;
+    this->_currentNode = source._currentNode;
+    this->_chatLogic->SetChatbotHandle(this);
+    // remove own values from source
+    source._image = NULL;
+}
+// move assignment operator
+ChatBot &ChatBot::operator=(ChatBot &&source) 
+{
+    std::cout << "Moving assignment instance " << &source << " to " << this << "\n";
+    // check if source is self
+    if (this == &source) {
+        return *this;
+    }
+    // if image exists, delete it
+    if(_image != NULL) {
+        delete _image;
+    }
+    // assign source data
+    if (source._image != NULL) {
+        this->_image = new wxBitmap(*source._image);
+    } else {
+        this->_image = NULL;
+    }
+    this->_chatLogic = source._chatLogic;
+    this->_rootNode = source._rootNode;
+    this->_currentNode = source._currentNode;
+    this->_chatLogic->SetChatbotHandle(this);
+    // remove own values from source
+    source._image = NULL;
+
+    return *this;
+}
 ////
 //// EOF STUDENT CODE
 
